@@ -26,7 +26,7 @@ function CadastroUsuario() {
             nome: '',
             usuario: '',
             senha: '',
-            foto:''
+            foto: ''
         })
 
     useEffect(() => {
@@ -49,22 +49,24 @@ function CadastroUsuario() {
         })
 
     }
-    async function onSubmit(event: ChangeEvent<HTMLFormElement>){
+    async function onSubmit(event: ChangeEvent<HTMLFormElement>) {
         event.preventDefault()
-        if(confirmarSenha === user.senha) {
-          try {
-            await cadastrarUser('/usuarios/cadastrar', user, setUserResult)
-            alert('Usuário cadastrado com sucesso')
-          } catch (error) {
-            alert('Por favor, verifique os campos')
-          }
+
+        if (confirmarSenha === user.senha) {
+            try {
+                await cadastroUsuario('/usuarios/cadastrar', user, setUserResult)
+                alert('Usuário cadastrado com sucesso! :)')
+            } catch (error) {
+                console.log(error)
+                alert('Por favor, verifique os campos!')
+            }
         } else {
-          alert('As senhas não coincidem')
-          setConfirmarSenha('')
-          setUser({
-            ...user,
-            senha: ''
-          })
+            alert('As senhas não coincidem!')
+            setConfirmarSenha('')
+            setUser({
+                ...user,
+                senha: ''
+            })
         }
     }
     return (
