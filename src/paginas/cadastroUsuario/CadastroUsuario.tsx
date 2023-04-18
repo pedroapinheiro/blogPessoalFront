@@ -49,13 +49,22 @@ function CadastroUsuario() {
         })
 
     }
-    async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault()
-        if (confirmarSenha == user.senha) {
-            cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult)
-            alert('Usuario cadastrado com sucesso')
+    async function onSubmit(event: ChangeEvent<HTMLFormElement>){
+        event.preventDefault()
+        if(confirmarSenha === user.senha) {
+          try {
+            await cadastrarUser('/usuarios/cadastrar', user, setUserResult)
+            alert('Usuário cadastrado com sucesso')
+          } catch (error) {
+            alert('Por favor, verifique os campos')
+          }
         } else {
-            alert('Dados inconsistentes. Favor verificar as informações de cadastro.')
+          alert('As senhas não coincidem')
+          setConfirmarSenha('')
+          setUser({
+            ...user,
+            senha: ''
+          })
         }
     }
     return (
@@ -90,3 +99,7 @@ function CadastroUsuario() {
 }
 
 export default CadastroUsuario;
+
+function cadastrarUser(arg0: string, user: User, setUserResult: React.Dispatch<React.SetStateAction<User>>) {
+    throw new Error('Function not implemented.');
+}
