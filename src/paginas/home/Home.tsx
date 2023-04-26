@@ -1,10 +1,29 @@
-import React from 'react';
-import { Typography, Grid, Button } from '@material-ui/core'; 
+import React, { useEffect } from 'react';
+import {Typography, Grid, Button} from '@material-ui/core';
+import {Box} from '@mui/material';
 import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem';
-import { Box } from '@mui/material';
+import ModalPostagem from '../../components/postagens/modalPostagem/ModalPostagem';
 import './Home.css';
+import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../store/token/tokensReducer';
+import {Link} from 'react-router-dom';
 
 function Home() {
+
+    let navigate = useNavigate();
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+      );
+    
+    useEffect(() => {
+      if (token == "") {
+          alert("Você precisa estar logado")
+          navigate("/login")
+  
+      }
+  }, [token])
+
     return (
         <>
             <Grid container direction="row" justifyContent="center" alignItems="center" className='caixa'>
@@ -15,8 +34,11 @@ function Home() {
                     </Box>
                     <Box display="flex" justifyContent="center">
                         <Box marginRight={1}>
+                            <ModalPostagem />
                         </Box>
+                        <Link to="/posts">
                         <Button variant="outlined" className='botao'>Clique e veja!</Button>
+                        </Link>
                     </Box>
                 </Grid>
                 <Grid item xs={6} >
