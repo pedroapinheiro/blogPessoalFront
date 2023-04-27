@@ -6,6 +6,7 @@ import { Grid, Typography, Button, TextField } from '@material-ui/core';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import './CadastroUsuario.css';
+import { toast } from 'react-toastify';
 
 function CadastroUsuario() {
 
@@ -55,13 +56,40 @@ function CadastroUsuario() {
         if (confirmarSenha === user.senha) {
             try {
                 await cadastroUsuario('/usuarios/cadastrar', user, setUserResult)
-                alert('Usuário cadastrado com sucesso! :)')
+                toast.success('Usuário cadastrado com sucesso! :)', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
             } catch (error) {
                 console.log(error)
-                alert('Por favor, verifique os campos!')
+                toast.error('Por favor, verifique os campos!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
             }
         } else {
-            alert('As senhas não coincidem!')
+            toast.error('As senhas não coincidem!', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
             setConfirmarSenha('')
             setUser({
                 ...user,
